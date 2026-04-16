@@ -16,11 +16,10 @@ A conversão acontece em tempo real enquanto você digita, sem necessidade de re
 
 ## Funcionalidades
 
-- **4 modos de conversão**
-  - `min:seg → segundos` (ex: 3:45 → 225)
-  - `segundos → min:seg` (ex: 225 → 03:45)
-  - `minutos → segundos` (ex: 5.5 → 330)
-  - `segundos → minutos` (ex: 330 → 5.5)
+- **2 modos de conversão**
+  - `min → segundos` (ex: 3:45 → 225)
+  - `segundos → min` (ex: 225 → 03:45)
+
 - **Conversão em tempo real** — o resultado atualiza enquanto você digita
 - **Copiar resultado** com um clique e feedback visual
 - **Histórico** das últimas 20 conversões, salvo no navegador (localStorage)
