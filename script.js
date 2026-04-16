@@ -11,7 +11,6 @@ const resultArea = document.getElementById('resultArea');
 const btnCopy = document.getElementById('btnCopy');
 const copyText = document.getElementById('copyText');
 const btnClear = document.getElementById('btnClear');
-const btnConvert = document.getElementById('btnConvert');
 const btnClearHistory = document.getElementById('btnClearHistory');
 const historyList = document.getElementById('historyList');
 const modeBtns = document.querySelectorAll('.mode-btn');
@@ -38,26 +37,12 @@ const modeConfig = {
     hint: 'Digite a quantidade de segundos',
     unit: 'min:seg',
   },
-  'm-to-s': {
-    label: 'Minutos',
-    placeholder: 'Ex: 5.5',
-    hint: 'Digite a quantidade de minutos',
-    unit: 'segundos',
-  },
-  's-to-m': {
-    label: 'Segundos',
-    placeholder: 'Ex: 330',
-    hint: 'Digite a quantidade de segundos',
-    unit: 'minutos',
-  },
 };
 
 // Nomes curtos para exibir no historico
 const modeNames = {
   'ms-to-s': 'min:seg \u2192 seg',
   's-to-ms': 'seg \u2192 min:seg',
-  'm-to-s': 'min \u2192 seg',
-  's-to-m': 'seg \u2192 min',
 };
 
 // ============================================
@@ -96,29 +81,6 @@ function secondsToMs(input) {
 }
 
 /**
- * Converte minutos para segundos.
- */
-function minutesToSeconds(input) {
-  const min = parseFloat(input);
-  if (isNaN(min) || min < 0) return null;
-
-  const result = min * 60;
-  // Mostrar inteiro se nao tiver decimal
-  return Number.isInteger(result) ? result : parseFloat(result.toFixed(2));
-}
-
-/**
- * Converte segundos para minutos.
- */
-function secondsToMinutes(input) {
-  const sec = parseFloat(input);
-  if (isNaN(sec) || sec < 0) return null;
-
-  const result = sec / 60;
-  return Number.isInteger(result) ? result : parseFloat(result.toFixed(4));
-}
-
-/**
  * Formata a entrada de minutos:segundos automaticamente.
  * Ex: "3:5" -> exibe "03:05" no resultado
  */
@@ -152,12 +114,6 @@ function convert() {
       break;
     case 's-to-ms':
       result = secondsToMs(raw);
-      break;
-    case 'm-to-s':
-      result = minutesToSeconds(raw);
-      break;
-    case 's-to-m':
-      result = secondsToMinutes(raw);
       break;
   }
 
@@ -324,14 +280,6 @@ async function copyResult() {
 
 // Conversao em tempo real ao digitar
 inputField.addEventListener('input', convert);
-
-// Botao converter
-btnConvert.addEventListener('click', convert);
-
-// Enter para converter
-inputField.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') convert();
-});
 
 // Limpar campo
 btnClear.addEventListener('click', () => {
