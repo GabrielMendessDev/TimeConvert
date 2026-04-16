@@ -22,6 +22,7 @@ const modeBtns = document.querySelectorAll('.mode-btn');
 let currentMode = 'ms-to-s';
 let history = JSON.parse(localStorage.getItem('timeconv_history') || '[]');
 let lastResult = '';
+let historyTimeout = null;
 
 // Configuracao de cada modo de conversao
 const modeConfig = {
@@ -41,8 +42,8 @@ const modeConfig = {
 
 // Nomes curtos para exibir no historico
 const modeNames = {
-  'ms-to-s': 'min:seg \u2192 seg',
-  's-to-ms': 'seg \u2192 min:seg',
+  'ms-to-s': 'min → seg',
+  's-to-ms': 'seg → min',
 };
 
 // ============================================
@@ -132,8 +133,11 @@ function convert() {
   resultArea.classList.add('has-value');
   clearError();
 
-  // Adicionar ao historico
-  addHistory(displayInput, displayResult, currentMode);
+  // Adicionar ao historico somente apos parar de digitar (800ms)
+  clearTimeout(historyTimeout);
+  historyTimeout = setTimeout(() => {
+    addHistory(displayInput, displayResult, currentMode);
+  }, 800);
 }
 
 // ============================================
