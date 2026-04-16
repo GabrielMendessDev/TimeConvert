@@ -30,13 +30,7 @@ A conversão acontece em tempo real enquanto você digita, sem necessidade de re
 
 ## Como usar
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/GabrielMendessDev/timeconvert.git
-   ```
-2. Abra o arquivo `index.html` no navegador.
-
-Não precisa de servidor, instalação ou build.
+![Link do Site](https://gabrielmendessdev.github.io/TimeConvert/)
 
 ## Estrutura do projeto
 
