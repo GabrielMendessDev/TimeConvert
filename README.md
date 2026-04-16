@@ -30,7 +30,23 @@ A conversão acontece em tempo real enquanto você digita, sem necessidade de re
 
 ## Como usar
 
-![Link do Site](https://gabrielmendessdev.github.io/TimeConvert/)
+Acesse a aplicação online — sem instalação, direto no navegador:
+
+<div align="center">
+
+### [Acessar o TimeConvert](https://gabrielmendessdev.github.io/TimeConvert/)
+
+</div>
+
+Ou, se preferir rodar localmente:
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/GabrielMendessDev/TimeConvvert.git
+   ```
+2. Abra o arquivo `index.html` no navegador.
+
+Não precisa de servidor, instalação ou build.
 
 ## Estrutura do projeto
 
