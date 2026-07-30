@@ -68,13 +68,17 @@ Não precisa de servidor, instalação ou build.
 Interface com estética tech/HUD, construída só com CSS — sem imagens externas nem bibliotecas:
 
 - Tema escuro profundo com gradiente ciano → índigo → roxo
-- Fundo em camadas: malha em grid com fade radial, orbs de luz em movimento, linha de varredura e ruído sutil (SVG inline)
-- Cards em glassmorphism (`backdrop-filter`) com borda de gradiente rotativo animado
+- Fundo em camadas estáticas: malha em grid com fade radial, brilho em gradiente radial e linha de horizonte
+- Cards com borda em gradiente (via `mask-composite`)
 - Painel de resultado em estilo HUD, com cantos em bracket e varredura interna
 - Seletor de modo com indicador deslizante
 - Fonte monospace nos valores, micro-labels em caixa alta com tracking largo
 - Histórico numerado (`01`, `02`, ...) via contador CSS
 - Respeita `prefers-reduced-motion`
+
+O visual é feito para ser leve: nada de `backdrop-filter` nem `filter: blur()`, e apenas duas
+animações contínuas (o LED de status e a varredura do painel, esta só quando há resultado na tela)
+— ambas em `opacity`/`transform`, que rodam no compositor sem repaint.
 
 ## Autor
 
