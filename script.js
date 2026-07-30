@@ -55,24 +55,22 @@ const modeNames = {
  * Aceita formatos: "3:45", "03:05", "0:30"
  */
 function msToSeconds(input) {
-  // Formata automaticamente: "3:5" vira "03:05"
-  const parts = input.split(':');
-  if (parts.length !== 2) return null;
+  // Regex exige a string inteira valida: parseInt aceitaria "3:45abc"
+  const match = input.match(/^(\d+):([0-5]?\d)$/);
+  if (!match) return null;
 
-  const min = parseInt(parts[0], 10);
-  const sec = parseInt(parts[1], 10);
-
-  if (isNaN(min) || isNaN(sec) || min < 0 || sec < 0 || sec > 59) return null;
-
-  return min * 60 + sec;
+  return parseInt(match[1], 10) * 60 + parseInt(match[2], 10);
 }
 
 /**
  * Converte total de segundos para formato minutos:segundos.
  */
 function secondsToMs(input) {
-  const sec = parseFloat(input);
-  if (isNaN(sec) || sec < 0) return null;
+  // Aceita "225" e "225.5" / "225,5"; recusa qualquer outro caractere
+  if (!/^\d+(?:[.,]\d+)?$/.test(input)) return null;
+
+  const sec = parseFloat(input.replace(',', '.'));
+  if (isNaN(sec)) return null;
 
   const totalSec = Math.round(sec);
   const m = Math.floor(totalSec / 60);
@@ -128,10 +126,12 @@ function convert() {
   const displayResult = String(result);
 
   // Atualizar resultado na tela
+  const changed = lastResult !== displayResult;
   lastResult = displayResult;
   resultValue.textContent = displayResult;
   resultArea.classList.add('has-value');
   clearError();
+  if (changed) pulseResult();
 
   // Adicionar ao historico somente apos parar de digitar (800ms)
   clearTimeout(historyTimeout);
@@ -145,10 +145,13 @@ function convert() {
 // ============================================
 
 function showError() {
+  // Limpa o resultado sem apagar o estado de erro
+  clearResultDisplay();
+  inputField.classList.remove('error');
+  void inputField.offsetWidth;
   inputField.classList.add('error');
   inputHint.classList.add('error');
   inputHint.textContent = 'Valor invalido. Verifique o formato.';
-  resetResult();
 }
 
 function clearError() {
@@ -157,10 +160,24 @@ function clearError() {
   inputHint.textContent = modeConfig[currentMode].hint;
 }
 
-function resetResult() {
+/** Redispara a animacao de atualizacao do resultado */
+function pulseResult() {
+  resultValue.classList.remove('updated');
+  void resultValue.offsetWidth;
+  resultValue.classList.add('updated');
+}
+
+/** Zera o painel de resultado (sem mexer no estado de erro) */
+function clearResultDisplay() {
+  clearTimeout(historyTimeout);
   lastResult = '';
   resultValue.textContent = '\u2014';
+  resultValue.classList.remove('updated');
   resultArea.classList.remove('has-value');
+}
+
+function resetResult() {
+  clearResultDisplay();
   clearError();
 }
 
@@ -284,6 +301,17 @@ async function copyResult() {
 
 // Conversao em tempo real ao digitar
 inputField.addEventListener('input', convert);
+
+// Atalhos: Enter copia o resultado, Esc limpa o campo
+inputField.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    copyResult();
+  } else if (e.key === 'Escape') {
+    inputField.value = '';
+    resetResult();
+  }
+});
 
 // Limpar campo
 btnClear.addEventListener('click', () => {

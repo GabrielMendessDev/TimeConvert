@@ -22,9 +22,10 @@ A conversão acontece em tempo real enquanto você digita, sem necessidade de re
 
 - **Conversão em tempo real** — o resultado atualiza enquanto você digita
 - **Copiar resultado** com um clique e feedback visual
+- **Atalhos de teclado** — `Enter` copia o resultado, `Esc` limpa o campo
 - **Histórico** das últimas 20 conversões, salvo no navegador (localStorage)
 - **Formatação automática** — entrada `3:5` é exibida como `03:05`
-- **Validação de entrada** com mensagens de erro claras
+- **Validação estrita** — recusa entradas como `3:9x` ou `225abc`, com mensagem de erro clara
 - **Responsivo** — funciona em desktop, tablet e celular
 
 ## Como usar
@@ -41,7 +42,7 @@ Ou, se preferir rodar localmente:
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/GabrielMendessDev/TimeConvvert.git
+   git clone https://github.com/GabrielMendessDev/TimeConvert.git
    ```
 2. Abra o arquivo `index.html` no navegador.
 
@@ -64,11 +65,22 @@ Não precisa de servidor, instalação ou build.
 
 ## Layout
 
-- Tema escuro com detalhes em azul e roxo
-- Fonte monospace para valores numéricos
-- Bordas arredondadas e sombras suaves
-- Animações em hover, foco e inserção de itens no histórico
-- Fundo com gradientes radiais sutis
+Interface com estética tech/HUD, construída só com CSS — sem imagens externas nem bibliotecas:
+
+- Tema escuro profundo com gradiente ciano → índigo → roxo
+- Fundo em camadas: malha em grid com fade radial, orbs de luz em movimento, linha de varredura e ruído sutil (SVG inline)
+- Cards em glassmorphism (`backdrop-filter`) com borda de gradiente rotativo animado
+- Painel de resultado em estilo HUD, com cantos em bracket e varredura interna
+- Seletor de modo com indicador deslizante
+- Fonte monospace nos valores, micro-labels em caixa alta com tracking largo
+- Histórico numerado (`01`, `02`, ...) via contador CSS
+- Respeita `prefers-reduced-motion`
+
+## Autor
+
+Feito por **Gabriel Mendes**
+
+[Instagram](https://www.instagram.com/gabrielmenndess/) &middot; [LinkedIn](https://www.linkedin.com/in/gabriel-mendes-bb5571264/) &middot; [GitHub](https://github.com/GabrielMendessDev)
 
 ## Licença
 
